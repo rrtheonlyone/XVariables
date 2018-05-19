@@ -1,14 +1,14 @@
 import * as React from 'react';
-import ReactPlayer from 'react-player'
-import NavigationBar from './NavBar'
 
- 
+import NavigationBar from './NavBar'
+import Player from './VideoPlayer/Player'
+
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
         <NavigationBar title="XVariables" />
-        <ReactPlayer url='https://www.youtube.com/watch?v=QwievZ1Tx-8' />
+        <Player/>
       </div>
     );
   }
