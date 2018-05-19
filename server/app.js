@@ -19,23 +19,24 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // mongoose schema go here
-var usersSchema = new Schema({
-	_id: Schema.Types.ObjectID,
+var userSchema = new mongoose.Schema({
+	_id: mongoose.Schema.Types.ObjectId,
 	firstName: String,
 	lastName: String,
 	videos: [{
-		type: Schema.Types.ObjectID,
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Video'
 		// emotions split by timeframe will go here dynamically
 	}]
 });
 
-var videoSchema = new Schema({
-	_id: Schema.Types.ObjectID,
+var videoSchema = new mongoose.Schema({
+	_id: mongoose.Schema.Types.ObjectId,
 	name: String,
 	users: [{
-		type: Schema.Types.ObjectID,
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+		// emotions split by timeframe to be added dynamically
 	}]
 });
 
@@ -43,9 +44,36 @@ var videoSchema = new Schema({
 var Video = mongoose.model('Video', videoSchema);
 var User = mongoose.model('User', userSchema);
 
-app.get('/users', function(req, res){
-	
+
+// make fake data
+var kaustubh = new User({
+	_id: new mongoose.Types.ObjectId(),
+	firstName: "kaustubh",
+	lastName: "kaustubh"
 });
+var nicklaus = new User({
+	_id: new mongoose.Schema.Types.ObjectId(),
+	firstName: "nicklaus",
+	lastName: "ong"
+});
+var jason = new User({
+	_id: new mongoose.Types.ObjectId(),
+	firstName: "jason",
+	lastName: "yip"
+});
+var rahul = new User({
+	_id: new mongoose.Types.ObjectId(),
+	firstName: "rahul",
+	lastName: "rajesh"
+});
+
+// populate database with fake data
+User.update(kaustubh);
+User.update(rahul);
+User.update(jason);
+User.update(nicklaus);
+
+
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
