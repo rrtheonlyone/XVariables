@@ -5,7 +5,7 @@ import {Grid, Row, Col, Panel, Glyphicon, PageHeader, Form, FormGroup, ControlLa
 
 import Webcam from 'react-webcam';
 import axios from 'axios';
-import {VictoryChart, VictoryLine} from 'victory';
+import {VictoryChart, VictoryLine, VictoryBar, VictoryTheme} from 'victory';
 
 class VideoPlayer extends Component {
 
@@ -51,6 +51,16 @@ class VideoPlayer extends Component {
 				toGraph.duration = temp.duration * temp.played;
 				toGraph.val = 1 - temp.emotion.neutral; 
 				this.state.graph.red.push(toGraph);
+
+				this.state.graph.blue = [];
+
+				var labels = ["anger", "disgust", "happiness", "sadness", "surprise"];
+				for (var i = 0; i < labels.length; ++i) {
+					var n = {};
+					n.x = labels[i];
+					n.y = temp.emotion[labels[i]];
+					this.state.graph.blue.push(n);
+				}
 			}
 		}
 	}
@@ -138,8 +148,6 @@ class VideoPlayer extends Component {
 		return (
 			<Grid>
 				<Row>	
-					<h1><Glyphicon glyph="book" />&nbsp; LMS Platform <small>Sentiment Analysis</small></h1>
-
 					<Form horizontal>
 					    <Col sm={10}>
 					      <FormControl type="email" placeholder="Type URL for training video here." />
@@ -160,7 +168,7 @@ class VideoPlayer extends Component {
 							ref={this.ref}
 							width='100%'
 				            height='350px'
-				            url='https://www.youtube.com/watch?v=YoHD9XEInc0'
+				            url='https://www.youtube.com/watch?v=vdbg6nJaoEU'
 				            playing={this.state.playing}
 				            onPlay={this.onPlay}
 				            onPause={this.onPause}
@@ -217,11 +225,12 @@ class VideoPlayer extends Component {
 				<br/><br/>
 
 				<Row>
-					<Col md={4}>
+					<Col md={6}>
+						<h4>Interest Level</h4>
 						<VictoryChart>
 						    <VictoryLine
 						      style={{data:
-						        {stroke: "red", strokeWidth: 4}
+						        {stroke: "#EF3340", strokeWidth: 4}
 						      }}
 						      data={this.state.graph && this.state.graph.red}
 						      x='duration'
@@ -230,7 +239,24 @@ class VideoPlayer extends Component {
 						  </VictoryChart>
 					</Col>
 
-					<Col md={8}>
+					<Col md={6}>
+						<h4>Emotion Feedback</h4>
+						<VictoryChart
+						  theme={VictoryTheme.material}
+						>
+						  <VictoryBar
+						    style={{ data: { fill: "#191970", width: 25 } }}
+						    alignment="start"
+						    data={this.state.graph && this.state.graph.blue}
+						  />
+						</VictoryChart>
+					</Col>
+				</Row>
+
+				<hr/>
+				<br/>
+
+				<Row>
 						<Table responsive hover>
 							<thead>
 							    <tr>
@@ -262,9 +288,9 @@ class VideoPlayer extends Component {
 
 							 		</tr>)}
 							 </tbody>
-						</Table>
-					</Col>
+						</Table>				
 				</Row>
+
 			</Grid>
 		)
 	}

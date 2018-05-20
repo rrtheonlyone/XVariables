@@ -12,7 +12,7 @@ class NavBar extends React.Component{
 	return <Navbar inverse fluid collapseOnSelect>
 		    <Navbar.Header>
 		      <Navbar.Brand>
-		        <a href="/">XVariables&nbsp;<Glyphicon glyph="education" /></a>
+		        <a href="/">XInsight&nbsp;<Glyphicon glyph="eye-close" /></a>
 		      </Navbar.Brand>
 		      <Navbar.Toggle />
 		    </Navbar.Header>

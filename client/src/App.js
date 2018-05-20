@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 
-import {Grid, Row, Col} from 'react-bootstrap';
-
 import VideoPlayer from './Video';
 import NavBar from './NavBar'
+import Dashboard from './Dashboard';
+
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <NavBar/>
+      <BrowserRouter>
+        <div className="App">
+          <NavBar/>
 
-        <Grid>
-          <Col md={8}>
-            <VideoPlayer/>
-          </Col>
-        </Grid>
-      
-      </div>
+          <Switch>
+            <Route exact path='/' component={VideoPlayer}/>
+            <Route path='/dashboard' component={Dashboard}/>
+          </Switch>
+
+        </div>
+      </BrowserRouter>
     );
   }
 }
